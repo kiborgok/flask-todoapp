@@ -28,9 +28,9 @@ def create_todo():
    try: 
        description =  request.get_json()['description']
        todo = Todo(description=description)
-       body['description'] = todo.description
        db.session.add(todo)
        db.session.commit()
+       body['description'] = todo.description
    except:        
         error = True
         db.session.rollback()
@@ -39,7 +39,7 @@ def create_todo():
         db.session.close()           
         if  error == True:
             abort(400)
-        else:            
+        else:           
             return jsonify(body)
 
 @app.route('/')
