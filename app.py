@@ -18,5 +18,3 @@ class Todo(db.Model):
 
     def __repr__(self):
         return f'<Todo: Id: {self.id}, name: {self.description}>'
-
-db.create_all()
