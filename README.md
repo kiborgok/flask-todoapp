@@ -4,6 +4,6 @@
 
 * What are migrations
 * Why we use migrations
-* How to install necessary libraries
+* How to install necessary libraries (Flask-Migrate)
 * Steps to get migrations going
 * Upgrades and Downgrades
