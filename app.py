@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort, jsonify
+from flask import Flask, redirect, render_template, request, abort, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import sys
@@ -42,9 +42,22 @@ def create_todo():
         else:           
             return jsonify(body)
 
+@app.route("/todos/<todo_id>/set-completed", methods=["POST"])
+def set_completed_todo(todo_id):
+    try:
+        completed = request.get_json()["completed"]
+        todo = Todo.query.get(todo_id)
+        todo.completed = completed
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return redirect(url_for("index"))
+
 @app.route('/')
 def index():
-    return render_template('index.html', data=Todo.query.all())
+    return render_template('index.html', data=Todo.query.order_by('id').all())
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=3000)
